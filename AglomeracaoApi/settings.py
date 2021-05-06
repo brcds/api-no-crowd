@@ -1,4 +1,6 @@
+import urllib
 from pathlib import Path
+import urllib3
 
 import os
 from os.path import exists
@@ -7,13 +9,11 @@ import environ
 env = environ.Env()
 BASE_DIR = environ.Path(__file__) - 2
 
-
 if exists(BASE_DIR.path('.env')):
     env.read_env(f'{BASE_DIR.path(".env")}')
 
-
-SECRET_KEY = env.bool('DEBUG', default=False)
-DEBUG = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
@@ -57,9 +57,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AglomeracaoApi.wsgi.application'
 
-
+# host = urllib3.disable_warnings(env("DATABASE_URI"))
 DATABASES = {
-    'default': env.db()
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'denuncias',
+        'CLIENT': {
+            'host': env("DATABASE_URI")
+        },
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -77,7 +83,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -90,7 +95,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
