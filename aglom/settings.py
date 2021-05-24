@@ -1,10 +1,8 @@
-import urllib
-from pathlib import Path
-import urllib3
-
 import os
 from os.path import exists
+
 import environ
+
 
 env = environ.Env()
 BASE_DIR = environ.Path(__file__) - 2
@@ -12,10 +10,12 @@ BASE_DIR = environ.Path(__file__) - 2
 if exists(BASE_DIR.path('.env')):
     env.read_env(f'{BASE_DIR.path(".env")}')
 
+
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -37,7 +36,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'AglomeracaoApi.urls'
+ROOT_URLCONF = 'aglom.urls'
 
 TEMPLATES = [
     {
@@ -55,17 +54,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'AglomeracaoApi.wsgi.application'
+WSGI_APPLICATION = 'aglom.wsgi.application'
 
-# host = urllib3.disable_warnings(env("DATABASE_URI"))
+
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'denuncias',
-        'CLIENT': {
-            'host': env("DATABASE_URI")
-        },
-    }
+    'default': env.db()
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -83,8 +79,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+# https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -96,12 +93,4 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

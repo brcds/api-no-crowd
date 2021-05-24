@@ -6,6 +6,7 @@ colorama==0.4.3
 Django==3.0.5
 django-environ==0.4.5
 django-mongodb-engine==0.6.0
+django-mongoengine==0.4.6
 djangorestframework==3.12.4
 djangotoolbox==1.8.0
 djongo==1.3.4
@@ -15,6 +16,8 @@ environ==1.0
 isort==5.5.4
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
+mongoengine==0.23.1
+psycopg2==2.8.6
 pylint==2.6.0
 pymongo==3.11.3
 PythonDNS==0.1
