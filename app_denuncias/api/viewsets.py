@@ -1,12 +1,32 @@
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from app_denuncias.models import Denuncias
 from .serializers import DenunciasSerializer
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import BasePermission
 
 
-
 class DenunciaViewSet(viewsets.ModelViewSet):
-
-    queryset = Denuncias.objects.all()
     serializer_class = DenunciasSerializer
+
+    def get_queryset(self):
+        return Denuncias.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        denuncia = Denuncias.objects.create(
+            id_user=request.user,
+            logintude=self.request.data['logintude'],
+            latitude=self.request.data['latitude'],
+            nome_lugar=self.request.data['nome_lugar'],
+            tipo_lugar=self.request.data['tipo_lugar'],
+            descricao=self.request.data['descricao'],
+            quantidade_pessoas=self.request.data['quantidade_pessoas'],
+            data_hora_ocorrido=self.request.data['data_hora_ocorrido']
+        )
+
+        denuncia.save()
+
+        if status.HTTP_201_CREATED:
+            return Response({"Denuncia realizada com sucesso"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"Erro ao realizar denuncia"}, status=status.HTTP_400_BAD_REQUEST)
