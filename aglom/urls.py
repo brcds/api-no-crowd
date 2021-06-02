@@ -7,7 +7,7 @@ from rest_framework import routers
 from app_denuncias.api.viewsets import DenunciaViewSet
 
 router = routers.DefaultRouter()
-router.register(r'denuncia', DenunciaViewSet)
+router.register(r'denuncia', DenunciaViewSet, basename='Denuncias')
 
 urlpatterns = [
     path('', include(router.urls)),
