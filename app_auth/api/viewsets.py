@@ -17,7 +17,8 @@ class RegisterView(generics.CreateAPIView):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
-        payload = jwt_payload_handler(request.user)
+        user = User.objects.get(username=response.data['username'])
+        payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
 
         if status.HTTP_200_OK:
