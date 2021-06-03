@@ -17,6 +17,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
         extra_kwargs = {
+            'username': {'required': False},
             'first_name': {'required': False},
             'last_name': {'required': False}
         }
@@ -29,10 +30,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create(
-            username=validated_data['username'],
+            username=validated_data['email'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
-            last_name=validated_data['last_name']
+            #last_name=validated_data['last_name']
         )
 
         user.set_password(validated_data['password'])
