@@ -27,6 +27,9 @@ class RegisterView(generics.CreateAPIView):
 
         if status.HTTP_200_OK:
             return Response({
+                'id': user.id,
+                'first_name': user.first_name,
+                'email': user.email,
                 'username': response.data['username'],
                 'token': token
             }, status=status.HTTP_201_CREATED)
@@ -55,6 +58,9 @@ class LoginView(generics.CreateAPIView):
 
         if user.check_password(request.data['password']):
             return Response({
+                'id': user.id,
+                'first_name': user.first_name,
+                'email': user.email,
                 'username': request.data['username'],
                 'token': token
             }, status=status.HTTP_200_OK)
