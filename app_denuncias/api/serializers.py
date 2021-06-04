@@ -6,4 +6,5 @@ class DenunciasSerializer(ModelSerializer):
     class Meta:
         model = Denuncias
         fields = ('id', 'id_user', 'logintude', 'latitude', 'nome_lugar',
-                  'tipo_lugar', 'descricao', 'quantidade_pessoas')
+                  'tipo_lugar', 'descricao', 'quantidade_pessoas', 'created_at',
+                  'updated_at')
