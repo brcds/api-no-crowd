@@ -1,0 +1,1 @@
+web: gunicorn aglom.wsgi --log-file -

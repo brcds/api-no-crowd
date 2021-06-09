@@ -1,4 +1,5 @@
 import os
+from decouple import config
 from os.path import exists
 
 import environ
@@ -9,10 +10,14 @@ BASE_DIR = environ.Path(__file__) - 2
 if exists(BASE_DIR.path('.env')):
     env.read_env(f'{BASE_DIR.path(".env")}')
 
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['*']
+#SECRET_KEY = env('SECRET_KEY')
+#DEBUG = env.bool('DEBUG', default=False)
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+ALLOWED_HOSTS = ['aglom.herokuapp.com', 'localhost:8000']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -78,10 +83,15 @@ WSGI_APPLICATION = 'aglom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+from dj_database_url import parse as dburl
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
+DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=bool),}
+'''
 DATABASES = {
     'default': env.db()
 }
-
+'''
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         #rest_framework.permissions.IsAuthenticated',
