@@ -4,19 +4,19 @@ from os.path import exists
 from pathlib import Path
 import environ
 
-#env = environ.Env()
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+env = environ.Env()
+BASE_DIR = environ.Path(__file__) - 2
 
 
-#if exists(BASE_DIR.path('.env')):
-#    env.read_env(f'{BASE_DIR.path(".env")}')
+if exists(BASE_DIR.path('.env')):
+    env.read_env(f'{BASE_DIR.path(".env")}')
 
 
-#SECRET_KEY = env('SECRET_KEY')
-#DEBUG = env.bool('DEBUG', default=False)
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=False)
 
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+#SECRET_KEY = config('SECRET_KEY')
+#DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['aglom.herokuapp.com', 'localhost:8000']
 
@@ -88,12 +88,11 @@ WSGI_APPLICATION = 'aglom.wsgi.application'
 from dj_database_url import parse as dburl
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
-DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=bool),}
-'''
+
 DATABASES = {
     'default': env.db()
 }
-'''
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         #rest_framework.permissions.IsAuthenticated',
