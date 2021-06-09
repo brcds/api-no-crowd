@@ -1,1 +1,1 @@
-web: gunicorn aglom.wsgi --log-file -
+web: gunicorn aglom.wsgi --preload --log-file -
