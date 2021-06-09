@@ -11,7 +11,6 @@ BASE_DIR = environ.Path(__file__) - 2
 if exists(BASE_DIR.path('.env')):
     env.read_env(f'{BASE_DIR.path(".env")}')
 
-
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
@@ -133,5 +132,6 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
