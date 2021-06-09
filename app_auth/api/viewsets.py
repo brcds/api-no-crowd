@@ -51,7 +51,13 @@ class LoginView(generics.CreateAPIView):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
-        user = User.objects.get(username=request.data['username'])
+        try:
+            user = User.objects.get(username=request.data['username'])
+        except Exception as E:
+            if str(E) == 'User matching query does not exist.':
+                return Response({f"Usuário ou senha incorretos"})
+            else:
+                return Response(f"{E}")
 
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
@@ -65,5 +71,4 @@ class LoginView(generics.CreateAPIView):
                 'token': token
             }, status=status.HTTP_200_OK)
         else:
-            return Response({f"Erro de login"},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response({f"Erro de login"}, status=status.HTTP_400_BAD_REQUEST)
