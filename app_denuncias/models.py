@@ -6,8 +6,8 @@ from pytz import timezone
 
 class Denuncias(models.Model):
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    logintude = models.IntegerField()
-    latitude = models.IntegerField()
+    logintude = models.FloatField()
+    latitude = models.FloatField()
     nome_lugar = models.CharField(max_length=200)
     tipo_lugar = models.CharField(max_length=200)
     descricao = models.TextField()
