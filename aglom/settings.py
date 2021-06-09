@@ -1,14 +1,15 @@
 import os
 from decouple import config
 from os.path import exists
-
+from pathlib import Path
 import environ
 
-env = environ.Env()
-BASE_DIR = environ.Path(__file__) - 2
+#env = environ.Env()
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-if exists(BASE_DIR.path('.env')):
-    env.read_env(f'{BASE_DIR.path(".env")}')
+
+#if exists(BASE_DIR.path('.env')):
+#    env.read_env(f'{BASE_DIR.path(".env")}')
 
 
 #SECRET_KEY = env('SECRET_KEY')
